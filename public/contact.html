@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - SY Wealth</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo" style="text-decoration: none; color: inherit; cursor: pointer;">
+                    <img src="images/logo.png" alt="SY Wealth" class="site-logo">
+                </a>
+                <nav class="nav">
+                    <a href="investments.html" class="nav-link">Investir</a>
+                    <a href="how-it-works.html" class="nav-link">Comment ça marche</a>
+                    <a href="about.html" class="nav-link">À propos</a>
+                    <a href="contact.html" class="nav-link active">Contact</a>
+                    <a href="login.html" class="nav-link btn-login">Connexion</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <section class="contact" style="padding: 60px 0;">
+        <div class="container">
+            <h1>Contactez-nous</h1>
+            <p class="section-subtitle">Vous avez une question? Notre équipe est là pour vous aider</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 60px 0;">
+                <!-- Contact Form -->
+                <div>
+                    <h2 style="margin-bottom: 30px;">Envoyez-nous un message</h2>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="contact-name">Nom</label>
+                            <input type="text" id="contact-name" name="name" required placeholder="Votre nom">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" name="email" required placeholder="votre@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-phone">Téléphone</label>
+                            <input type="tel" id="contact-phone" name="phone" placeholder="0707070707">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-subject">Sujet</label>
+                            <input type="text" id="contact-subject" name="subject" required placeholder="Sujet de votre message">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" name="message" required placeholder="Votre message..." rows="6"></textarea>
+                        </div>
+
+                        <div id="contact-error" class="error-message" style="margin-bottom: 15px;"></div>
+                        <div id="contact-success" style="color: var(--success-color); margin-bottom: 15px; display: none;"></div>
+
+                        <button type="submit" class="btn btn-primary full-width">Envoyer le message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h2 style="margin-bottom: 30px;">Nos informations</h2>
+
+                    <div style="background: linear-gradient(135deg, rgba(74, 95, 247, 0.1), rgba(255, 107, 53, 0.1)); padding: 30px; border-radius: 12px; margin-bottom: 20px;">
+                        <h3 style="color: var(--primary-blue); margin-bottom: 15px;">📞 Téléphone</h3>
+                        <p style="font-size: 18px; color: var(--text-primary);">+221 77 123 45 67</p>
+                        <p style="color: var(--text-secondary); margin-top: 10px;">Disponible du lundi au vendredi, 8h-18h GMT+0</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(255, 107, 53, 0.1)); padding: 30px; border-radius: 12px; margin-bottom: 20px;">
+                        <h3 style="color: var(--accent-green); margin-bottom: 15px;">📧 Email</h3>
+                        <p style="font-size: 18px; color: var(--text-primary);">support@sywealth.com</p>
+                        <p style="color: var(--text-secondary); margin-top: 10px;">Nous répondons dans les 24 heures</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(74, 95, 247, 0.1)); padding: 30px; border-radius: 12px;">
+                        <h3 style="color: var(--primary-blue); margin-bottom: 15px;">💬 Support en ligne</h3>
+                        <p style="font-size: 18px; color: var(--text-primary);">Chat en direct disponible</p>
+                        <p style="color: var(--text-secondary); margin-top: 10px;">Parlez avec un agent maintenant</p>
+                        <a href="#" class="btn btn-primary" style="margin-top: 15px; inline-block;display:inline-block;">Démarrer le chat</a>
+                    </div>
+
+                    <div style="margin-top: 40px; padding: 20px; background: #F3F4F6; border-radius: 12px;">
+                        <h4 style="margin-bottom: 15px;">Heures d'ouverture</h4>
+                        <ul style="list-style: none; color: var(--text-secondary);">
+                            <li style="margin: 8px 0;">📅 Lundi - Vendredi: 8:00 - 18:00</li>
+                            <li style="margin: 8px 0;">📅 Samedi: 9:00 - 14:00</li>
+                            <li style="margin: 8px 0;">📅 Dimanche: Fermé</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div style="background: #F3F4F6; padding: 40px; border-radius: 16px; margin-top: 60px;">
+                <h2 style="text-align: center; margin-bottom: 40px;">Questions fréquentes</h2>
+                <div style="display: grid; gap: 20px;">
+                    <details style="padding: 20px; background: white; border-radius: 8px; cursor: pointer;">
+                        <summary style="font-weight: 600; color: var(--primary-blue);">Comment puis-je changer mon mot de passe?</summary>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">Vous pouvez changer votre mot de passe dans la section "Paramètres" de votre tableau de bord. Cliquez sur "Sécurité" puis "Changer le mot de passe".</p>
+                    </details>
+
+                    <details style="padding: 20px; background: white; border-radius: 8px; cursor: pointer;">
+                        <summary style="font-weight: 600; color: var(--primary-blue);">Que faire si j'oublie mon mot de passe?</summary>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">Cliquez sur "Mot de passe oublié" sur la page de connexion et suivez les instructions pour le réinitialiser.</p>
+                    </details>
+
+                    <details style="padding: 20px; background: white; border-radius: 8px; cursor: pointer;">
+                        <summary style="font-weight: 600; color: var(--primary-blue);">Combien de temps pour verser des fonds?</summary>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">Les virements via Wave et Orange Money sont traités instantanément. Pour les autres méthodes, comptez 1-2 heures.</p>
+                    </details>
+
+                    <details style="padding: 20px; background: white; border-radius: 8px; cursor: pointer;">
+                        <summary style="font-weight: 600; color: var(--primary-blue);">Puis-je demander un remboursement?</summary>
+                        <p style="margin-top: 15px; color: var(--text-secondary);">Une fois le dépôt effectué et investi, les fonds suivent le plan d'investissement choisi. Les retours quotidiens peuvent être retirés à tout moment.</p>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SY Wealth. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const phone = document.getElementById('contact-phone').value;
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value;
+            const errorDiv = document.getElementById('contact-error');
+            const successDiv = document.getElementById('contact-success');
+
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                errorDiv.textContent = 'Veuillez remplir tous les champs obligatoires';
+                errorDiv.style.display = 'block';
+                successDiv.style.display = 'none';
+                return;
+            }
+
+            // In a real application, you would send this to a backend
+            // For now, we'll show a success message
+            errorDiv.style.display = 'none';
+            successDiv.textContent = '✓ Merci! Nous avons reçu votre message et vous répondrons très bientôt.';
+            successDiv.style.display = 'block';
+            
+            // Reset form
+            document.getElementById('contact-form').reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

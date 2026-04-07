@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord - SY Wealth</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="dashboard.html" class="logo">
+                        <img src="images/logo.png" alt="SY Wealth" class="site-logo">
+                    </a>
+                <nav class="nav">
+                    <div class="user-menu">
+                        <span id="user-name">Utilisateur</span>
+                        <button id="logout-btn" class="btn-logout">Déconnexion</button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="sidebar-link active" data-section="dashboard">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="#invest" class="sidebar-link" data-section="invest">
+                    <span>💰</span> Investir
+                </a>
+                <a href="#deposit" class="sidebar-link" data-section="deposit">
+                    <span>📥</span> Dépôt
+                </a>
+                <a href="#withdrawal" class="sidebar-link" data-section="withdrawal">
+                    <span>📤</span> Retrait
+                </a>
+                <a href="#history" class="sidebar-link" data-section="history">
+                    <span>📋</span> Historique
+                </a>
+                <a href="#profile" class="sidebar-link" data-section="profile">
+                    <span>👤</span> Profil
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-content">
+            <!-- DASHBOARD SECTION -->
+            <section id="dashboard" class="dashboard-section active">
+                <h1>Tableau de bord</h1>
+                
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-label">Solde</div>
+                        <div class="card-value balance" id="balance">5 250 FCFA</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Gain aujourd'hui</div>
+                        <div class="card-value gain-today" id="gain-today">+250 FCFA</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Investissements actifs</div>
+                        <div class="card-value investments-active" id="investments-active">1</div>
+                    </div>
+                </div>
+
+                <h2>Investissements actifs</h2>
+                <div id="active-investments" class="investments-table">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <h2>Réclamer mon salaire</h2>
+                <div class="claim-salary-section">
+                    <p>Récupérez vos gains quotidiens en appuyant sur le bouton ci-dessous. Vous pouvez le faire une fois par jour.</p>
+                    <button id="claim-salary-btn" class="btn btn-primary">Réclamer mon salaire</button>
+                    <div id="claim-message" class="message"></div>
+                </div>
+            </section>
+
+            <!-- INVEST SECTION -->
+            <section id="invest" class="dashboard-section">
+                <h1>Investir</h1>
+                <div class="products-grid" id="products-grid">
+                    <p style="text-align:center; color:#888; width:100%;">Chargement des produits...</p>
+                </div>
+            </section>
+
+            <!-- DEPOSIT SECTION -->
+            <section id="deposit" class="dashboard-section">
+                <h1>Effectuer un dépôt</h1>
+                <div class="instruction-box">
+                    <h3>Instructions</h3>
+                    <p>Envoyer votre dépôt à :</p>
+                    <div class="payment-methods">
+                        <div class="payment-method">
+                            <strong>Wave :</strong>
+                            <span class="payment-number">0707070707</span>
+                        </div>
+                        <div class="payment-method">
+                            <strong>Orange Money :</strong>
+                            <span class="payment-number">0707070707</span>
+                        </div>
+                        <p class="note"><strong>Nom :</strong> SY Wealth</p>
+                    </div>
+                </div>
+
+                <form id="deposit-form">
+                    <div class="form-group">
+                        <label for="deposit-amount">Montant</label>
+                        <input type="number" id="deposit-amount" name="amount" required min="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deposit-method">Méthode</label>
+                        <select id="deposit-method" name="method" required>
+                            <option value="">Sélectionner une méthode</option>
+                            <option value="wave">Wave</option>
+                            <option value="orange">Orange Money</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sender-phone">Numéro expéditeur</label>
+                        <input type="tel" id="sender-phone" name="sender_phone" required placeholder="0707070707">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receipt">Capture écran paiement</label>
+                        <input type="file" id="receipt" name="receipt" required accept="image/*">
+                    </div>
+
+                    <div id="deposit-message" class="message"></div>
+
+                    <button type="submit" class="btn btn-primary">Soumettre dépôt</button>
+                </form>
+            </section>
+
+            <!-- WITHDRAWAL SECTION -->
+            <section id="withdrawal" class="dashboard-section">
+                <h1>Demander un retrait</h1>
+                <form id="withdrawal-form">
+                    <div class="form-group">
+                        <label for="withdrawal-amount">Montant</label>
+                        <input type="number" id="withdrawal-amount" name="amount" required min="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="withdrawal-method">Méthode de paiement</label>
+                        <select id="withdrawal-method" name="method" required>
+                            <option value="">Sélectionner une méthode</option>
+                            <option value="wave">Wave</option>
+                            <option value="orange">Orange Money</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone-number">Numéro Mobile Money</label>
+                        <input type="tel" id="phone-number" name="phone" required placeholder="0707070707">
+                    </div>
+
+                    <div id="withdrawal-message" class="message"></div>
+
+                    <button type="submit" class="btn btn-primary">Demander retrait</button>
+                </form>
+            </section>
+
+            <!-- HISTORY SECTION -->
+            <section id="history" class="dashboard-section">
+                <h1>Historique des transactions</h1>
+                <div id="transaction-history" class="history-table">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- PROFILE SECTION -->
+            <section id="profile" class="dashboard-section">
+                <h1>Profil</h1>
+                <div class="profile-info">
+                    <div class="info-group">
+                        <label>Nom:</label>
+                        <span id="profile-name">--</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Téléphone:</label>
+                        <span id="profile-phone">--</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Date d'inscription:</label>
+                        <span id="profile-date">--</span>
+                    </div>
+                    <div class="info-group" style="align-items: center; gap: 10px;">
+                        <label>Votre lien de parrainage:</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="text" id="profile-referral" readonly style="flex: 1; padding: 10px; border: 1px solid #DDD; border-radius: 6px; background: #F9FAFB;" />
+                            <button type="button" id="copy-referral" class="btn btn-secondary" style="white-space: nowrap;">Copier</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SY Wealth. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

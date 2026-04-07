@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S'inscrire - SY Wealth</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo" style="text-decoration: none; color: inherit; cursor: pointer;">
+                        <img src="images/logo.png" alt="SY Wealth" class="site-logo">
+                    </a>
+                <nav class="nav">
+                    <a href="investments.html" class="nav-link">Investir</a>
+                    <a href="how-it-works.html" class="nav-link">Comment ça marche</a>
+                    <a href="about.html" class="nav-link">À propos</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="login.html" class="nav-link btn-login">Connexion</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- SIGNUP FORM -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1>Créer un compte</h1>
+                <p style="color: var(--text-secondary); margin-bottom: 25px;">Rejoignez SY Wealth en quelques secondes</p>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" required placeholder="Prénom et Nom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Numéro de téléphone</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="0707070707 ou +221707070707">
+                        <small style="color: var(--text-light); margin-top: 5px; display: block;">Format: 0707070707 (Sénégal)</small>
+                        <small id="phone-status" style="color: var(--text-light); margin-top: 3px; display: none;"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required placeholder="••••••••">
+                        <small style="color: var(--text-light); margin-top: 5px;">Minimum 6 caractères</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmer le mot de passe</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="••••••••">
+                    </div>
+
+                    <div id="error-message" class="error-message" style="margin-bottom: 15px;"></div>
+                    <div id="success-message" style="color: var(--success-color); background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: none;"></div>
+                    <div id="referral-message" style="color: #064E3B; background: rgba(220, 252, 231, 0.8); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: none;"></div>
+
+                    <button type="submit" class="btn btn-primary full-width" id="signup-btn">Créer mon compte</button>
+                </form>
+
+                <div style="margin-top: 20px; padding: 15px; background: #F3F4F6; border-radius: 8px; font-size: 14px; color: var(--text-secondary);">
+                    <strong>Besoin d'aide?</strong> Vérifiez que votre numéro est au bon format. Si vous avez des problèmes, contactez notre <a href="contact.html" style="color: var(--primary-blue); text-decoration: none;">support</a>.
+                </div>
+
+                <p class="auth-link">Vous avez un compte? <a href="login.html" style="color: var(--primary-blue);">Se connecter</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SY Wealth. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        const form = document.getElementById('signup-form');
+        const errorDiv = document.getElementById('error-message');
+        const successDiv = document.getElementById('success-message');
+        const signupBtn = document.getElementById('signup-btn');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+        const confirmInput = document.getElementById('confirm-password');
+        const phoneStatus = document.getElementById('phone-status');
+        const referralMessage = document.getElementById('referral-message');
+        const referralCode = new URLSearchParams(window.location.search).get('ref');
+
+        if (referralCode) {
+            referralMessage.textContent = 'Vous vous inscrivez avec un lien de parrainage. Le parrain recevra 25 FCFA à votre inscription.';
+            referralMessage.style.display = 'block';
+        }
+
+        // Real-time phone validation
+        phoneInput.addEventListener('input', function() {
+            // Remove spaces as user types
+            let value = this.value.replace(/\s/g, '');
+            this.value = value;
+            
+            // Show status - accept any number starting with 0 or + with minimum 8 digits
+            const cleanPhone = value.replace(/\s/g, '');
+            if (cleanPhone) {
+                // Accept: 0XXXXXXXXX (10+ chars) or +XXXXXXXXXXX (12+ chars)
+                if (/^(\+221|0)\d{8,}$/.test(cleanPhone) || /^\d{9,}$/.test(cleanPhone)) {
+                    phoneStatus.style.display = 'block';
+                    phoneStatus.style.color = '#10B981';
+                    phoneStatus.textContent = '✓ Format accepté';
+                } else {
+                    phoneStatus.style.display = 'block';
+                    phoneStatus.style.color = '#EF4444';
+                    phoneStatus.textContent = '❌ Le numéro doit avoir au moins 9 chiffres';
+                }
+            } else {
+                phoneStatus.style.display = 'none';
+            }
+        });
+
+        phoneInput.addEventListener('change', function() {
+            this.value = this.value.replace(/\s/g, '');
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            errorDiv.textContent = '';
+
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const password = passwordInput.value;
+            const confirmPassword = confirmInput.value;
+
+            // Validation
+            if (!name || name.length < 2) {
+                errorDiv.textContent = '❌ Veuillez entrer un nom valide (minimum 2 caractères)';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (!phone) {
+                errorDiv.textContent = '❌ Le numéro de téléphone est obligatoire';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Simple phone validation - accept common formats
+            const cleanPhone = phone.replace(/\s/g, '');
+            if (!/^(\+221|0)\d{8,}$/.test(cleanPhone) && !/^\d{9,}$/.test(cleanPhone)) {
+                errorDiv.textContent = '❌ Le numéro doit avoir au moins 9 chiffres (ex: 0707070707 ou 0151717718)';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorDiv.textContent = '❌ Les mots de passe ne correspondent pas';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorDiv.textContent = '❌ Le mot de passe doit contenir au moins 6 caractères';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Disable button and show loading state
+            signupBtn.disabled = true;
+            signupBtn.textContent = 'Création en cours...';
+
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone, password, referralCode })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    let message = '✓ Compte créé avec succès!';
+                    if (data.referralInfo) {
+                        message += `<br>💰 ${data.referralInfo.message}`;
+                    }
+                    successDiv.innerHTML = message + '<br>Redirection en cours...';
+                    successDiv.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                } else {
+                    const errorMsg = data.message || 'Erreur lors de l\'inscription';
+                    errorDiv.textContent = '❌ ' + errorMsg;
+                    errorDiv.style.display = 'block';
+                    console.error('Signup error:', errorMsg, data);
+                    signupBtn.disabled = false;
+                    signupBtn.textContent = 'Créer mon compte';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorDiv.textContent = '❌ Erreur réseau: ' + error.message;
+                errorDiv.style.display = 'block';
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Créer mon compte';
+            }
+        });
+    </script>
+</body>
+</html>

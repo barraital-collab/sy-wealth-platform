@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SY Wealth</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <nav class="nav">
+                    <a href="investments.html" class="nav-link active">Investir</a>
+                    <a href="how-it-works.html" class="nav-link">Comment ça marche</a>
+                    <a href="about.html" class="nav-link">À propos</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="login.html" class="nav-link btn-login">Connexion</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- INVESTMENTS -->
+    <section class="investments-section">
+        <div class="container">
+            <h1>Produits d'investissement</h1>
+            <div class="products-grid" id="products-grid">
+                <p style="text-align:center; color:#888; width:100%;">Chargement des produits...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SY Wealth. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        async function loadInvestmentProducts() {
+            const container = document.getElementById('products-grid');
+            try {
+                const response = await fetch('/api/investments/products');
+                const data = await response.json();
+
+                if (!data.success || !Array.isArray(data.products)) {
+                    container.innerHTML = '<p style="text-align:center; color:#888; width:100%;">Impossible de charger les produits.</p>';
+                    return;
+                }
+
+                if (data.products.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; color:#888; width:100%;">Aucun produit disponible pour le moment.</p>';
+                    return;
+                }
+
+                container.innerHTML = data.products.map(product => {
+                    const profitTotal = product.dailyGain * product.duration;
+                    return `
+                        <div class="product-card">
+                            <div class="product-icon">💼</div>
+                            <h3>${product.name}</h3>
+                            <div class="product-details">
+                                <div class="detail">
+                                    <span class="label">Investissement:</span>
+                                    <span class="value">${formatCurrency(product.investment)}</span>
+                                </div>
+                                <div class="detail">
+                                    <span class="label">Gain quotidien:</span>
+                                    <span class="value gain">${formatCurrency(product.dailyGain)}</span>
+                                </div>
+                                <div class="detail">
+                                    <span class="label">Durée:</span>
+                                    <span class="value">${product.duration} jours</span>
+                                </div>
+                                <div class="detail highlight">
+                                    <span class="label">Profit total:</span>
+                                    <span class="value">${formatCurrency(profitTotal)}</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary invest-btn" data-product="${product.id}">Investir</button>
+                        </div>
+                    `;
+                }).join('');
+
+                document.querySelectorAll('.invest-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        if (!isLoggedIn()) {
+                            window.location.href = 'login.html';
+                        } else {
+                            window.location.href = 'dashboard.html?action=invest&product=' + this.dataset.product;
+                        }
+                    });
+                });
+            } catch (error) {
+                container.innerHTML = '<p style="text-align:center; color:#888; width:100%;">Erreur lors du chargement des produits.</p>';
+            }
+        }
+
+        loadInvestmentProducts();
+    </script>
+</body>
+</html>

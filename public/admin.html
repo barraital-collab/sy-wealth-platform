@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - SY Wealth</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="admin.html" class="logo">
+                    <img src="images/logo.png" alt="SY Wealth" class="site-logo">
+                </a>
+                <nav class="nav">
+                    <div class="user-menu">
+                        <span id="admin-name">Admin</span>
+                        <button id="logout-btn" class="btn-logout">Déconnexion</button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="sidebar-link active" data-section="dashboard">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="#users" class="sidebar-link" data-section="users">
+                    <span>👥</span> Utilisateurs
+                </a>
+                <a href="#projects" class="sidebar-link" data-section="projects">
+                    <span>💻</span> Produits
+                </a>
+                <a href="#deposits" class="sidebar-link" data-section="deposits">
+                    <span>📥</span> Dépôts
+                </a>
+                <a href="#withdrawals" class="sidebar-link" data-section="withdrawals">
+                    <span>📤</span> Retraits
+                </a>
+                <a href="#history" class="sidebar-link" data-section="history">
+                    <span>🧾</span> Historique
+                </a>
+                <a href="#announcements" class="sidebar-link" data-section="announcements">
+                    <span>📢</span> Annonces
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="admin-content">
+            <!-- DASHBOARD SECTION -->
+            <section id="dashboard" class="admin-section active">
+                <h1>Dashboard Admin</h1>
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Total utilisateurs</div>
+                        <div class="stat-value" id="total-users">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Dépôts en attente</div>
+                        <div class="stat-value" id="pending-deposits">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Retraits en attente</div>
+                        <div class="stat-value" id="pending-withdrawals">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Profit quotidien</div>
+                        <div class="stat-value" id="daily-profit">0 FCFA</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- USERS SECTION -->
+            <section id="users" class="admin-section">
+                <h1>Gestion des utilisateurs</h1>
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Téléphone</th>
+                                <th>Solde</th>
+                                <th>Inscrit</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PROJECTS SECTION -->
+            <section id="projects" class="admin-section">
+                <h1>Gestion des produits</h1>
+                <button class="btn btn-primary" id="add-project-btn">Ajouter un produit</button>
+
+                <div id="project-form" class="admin-form" style="display: none;">
+                    <h3>Nouveau produit</h3>
+                    <form id="add-project-form">
+                        <div class="form-group">
+                            <label for="project-name">Nom du produit</label>
+                            <input type="text" id="project-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-investment">Montant d'investissement</label>
+                            <input type="number" id="project-investment" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-daily">Gain quotidien</label>
+                            <input type="number" id="project-daily" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-duration">Durée (jours)</label>
+                            <input type="number" id="project-duration" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Créer</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-project">Annuler</button>
+                    </form>
+                </div>
+
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Investissement</th>
+                                <th>Gain/jour</th>
+                                <th>Durée</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- DEPOSITS SECTION -->
+            <section id="deposits" class="admin-section">
+                <h1>Gestion des dépôts</h1>
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Montant</th>
+                                <th>Méthode</th>
+                                <th>Date</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deposits-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- WITHDRAWALS SECTION -->
+            <section id="withdrawals" class="admin-section">
+                <h1>Gestion des retraits</h1>
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Montant</th>
+                                <th>Méthode</th>
+                                <th>Numéro de réception</th>
+                                <th>Date</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdrawals-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- HISTORY SECTION -->
+            <section id="history" class="admin-section">
+                <h1>Historique des dépôts et retraits</h1>
+                <div class="admin-table-wrapper">
+                    <h3>Dépôts</h3>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Montant</th>
+                                <th>Méthode</th>
+                                <th>Statut</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deposit-history-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="admin-table-wrapper" style="margin-top: 30px;">
+                    <h3>Retraits</h3>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Montant</th>
+                                <th>Méthode</th>
+                                <th>Numéro de réception</th>
+                                <th>Statut</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdrawal-history-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ANNOUNCEMENTS SECTION -->
+            <section id="announcements" class="admin-section">
+                <h1>Annonces</h1>
+                <div class="announcement-form">
+                    <h3>Publier une annonce</h3>
+                    <form id="announcement-form">
+                        <div class="form-group">
+                            <label for="announcement-title">Titre</label>
+                            <input type="text" id="announcement-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="announcement-content">Message</label>
+                            <textarea id="announcement-content" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Publier</button>
+                    </form>
+                </div>
+
+                <div class="announcements-list">
+                    <h3>Annonces publiées</h3>
+                    <div id="announcements-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SY Wealth. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

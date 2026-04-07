@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Admin - SY Wealth</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo" style="text-decoration: none; color: inherit; cursor: pointer;">
+                        <img src="images/logo.png" alt="SY Wealth" class="site-logo">
+                    </a>
+                <nav class="nav">
+                    <a href="login.html" class="nav-link">Utilisateurs</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- LOGIN FORM -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🔐</div>
+                    <h1>Espace Administrateur</h1>
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: 25px; text-align: center;">Connectez-vous avec vos identifiants administrateur</p>
+                
+                <form id="admin-login-form">
+                    <div class="form-group">
+                        <label for="admin-phone">Numéro de téléphone</label>
+                        <input type="tel" id="admin-phone" name="phone" required placeholder="0707070707">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="admin-password">Mot de passe</label>
+                        <input type="password" id="admin-password" name="password" required placeholder="••••••••">
+                    </div>
+
+                    <div id="admin-error-message" class="error-message" style="margin-bottom: 15px;"></div>
+
+                    <button type="submit" class="btn btn-primary full-width" id="admin-login-btn">Se connecter comme admin</button>
+                </form>
+
+                <p class="auth-link" style="margin-top: 20px; text-align: center;">
+                    <a href="login.html" style="color: var(--primary-blue);">← Connexion utilisateur</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SY Wealth. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        const user = getUser();
+        if (user && user.role === 'admin') {
+            window.location.href = 'admin.html';
+            return;
+        }
+        if (user && user.role !== 'admin') {
+            window.location.href = 'dashboard.html';
+            return;
+        }
+
+        const form = document.getElementById('admin-login-form');
+        const errorDiv = document.getElementById('admin-error-message');
+        const loginBtn = document.getElementById('admin-login-btn');
+        const phoneInput = document.getElementById('admin-phone');
+        const passwordInput = document.getElementById('admin-password');
+
+        const allowedPorts = ['3000', '3001', '30001', ''];
+        const currentPort = window.location.port;
+        const isAdminPortValid = allowedPorts.includes(currentPort);
+
+        if (!isAdminPortValid) {
+            errorDiv.textContent = `❌ Port invalide : assurez-vous d'utiliser http://localhost:3000, http://localhost:3001 ou http://localhost:30001. Vous êtes sur http://localhost:${currentPort}`;
+            errorDiv.style.display = 'block';
+            loginBtn.disabled = true;
+        }
+
+        phoneInput.addEventListener('change', function() {
+            this.value = this.value.replace(/\s/g, '');
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+
+            if (!isAdminPortValid) {
+                errorDiv.textContent = `❌ Port invalide : la connexion administrateur ne fonctionnera pas sur http://localhost:${currentPort}. Utilisez http://localhost:3000, http://localhost:3001 ou http://localhost:30001.`;
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            const phone = phoneInput.value.trim();
+            const password = passwordInput.value;
+
+            // Validation
+            if (!phone) {
+                errorDiv.textContent = '❌ Le numéro de téléphone est obligatoire';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (!password) {
+                errorDiv.textContent = '❌ Le mot de passe est obligatoire';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Disable button and show loading state
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Connexion en cours...';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Check if user is admin
+                    if (data.user.role === 'admin') {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        window.location.href = 'admin.html';
+                    } else {
+                        errorDiv.textContent = '❌ Accès refusé. Cet espace est réservé aux administrateurs.';
+                        errorDiv.style.display = 'block';
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Se connecter comme admin';
+                    }
+                } else {
+                    errorDiv.textContent = '❌ ' + (data.message || 'Identifiants incorrects. Vérifiez vos informations.');
+                    errorDiv.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Se connecter comme admin';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorDiv.textContent = '❌ Erreur réseau. Vérifiez votre connexion et réessayez.';
+                errorDiv.style.display = 'block';
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Se connecter comme admin';
+            }
+        });
+    </script>
+</body>
+</html>

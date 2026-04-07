@@ -1,0 +1,98 @@
+✓ Database initialized (SQLite)
+Initializing database...
+✓ Database initialization complete
+
+[
+  {
+    "name": "query",
+    "handleName": "query",
+    "path": "^\\/?(?=\\/|$)"
+  },
+  {
+    "name": "expressInit",
+    "handleName": "expressInit",
+    "path": "^\\/?(?=\\/|$)"
+  },
+  {
+    "name": "corsMiddleware",
+    "handleName": "corsMiddleware",
+    "path": "^\\/?(?=\\/|$)"
+  },
+  {
+    "name": "bound dispatch",
+    "handleName": "bound dispatch",
+    "path": "^(.*)\\/?$"
+  },
+  {
+    "name": "jsonParser",
+    "handleName": "jsonParser",
+    "path": "^\\/?(?=\\/|$)"
+  },
+  {
+    "name": "urlencodedParser",
+    "handleName": "urlencodedParser",
+    "path": "^\\/?(?=\\/|$)"
+  },
+  {
+    "name": "serveStatic",
+    "handleName": "serveStatic",
+    "path": "^\\/?(?=\\/|$)"
+  },
+  {
+    "name": "router",
+    "handleName": "router",
+    "path": "^\\/api\\/auth\\/?(?=\\/|$)"
+  },
+  {
+    "name": "router",
+    "handleName": "router",
+    "path": "^\\/api\\/dashboard\\/?(?=\\/|$)"
+  },
+  {
+    "name": "router",
+    "handleName": "router",
+    "path": "^\\/api\\/investments\\/?(?=\\/|$)"
+  },
+  {
+    "name": "router",
+    "handleName": "router",
+    "path": "^\\/api\\/deposits\\/?(?=\\/|$)"
+  },
+  {
+    "name": "router",
+    "handleName": "router",
+    "path": "^\\/api\\/withdrawals\\/?(?=\\/|$)"
+  },
+  {
+    "name": "router",
+    "handleName": "router",
+    "path": "^\\/api\\/admin\\/?(?=\\/|$)"
+  },
+  {
+    "name": "router",
+    "handleName": "router",
+    "path": "^\\/api\\/statistics\\/?(?=\\/|$)"
+  },
+  {
+    "name": "bound dispatch",
+    "handleName": "bound dispatch",
+    "path": "^\\/api\\/health\\/?$"
+  },
+  {
+    "name": "<anonymous>",
+    "handleName": "",
+    "path": "^\\/?(?=\\/|$)"
+  },
+  {
+    "name": "<anonymous>",
+    "handleName": "",
+    "path": "^(.*)\\/?(?=\\/|$)"
+  }
+]
+Port 3000 is in use, trying port 30001...
+✓ SY Wealth API Server running on http://localhost:30001
+
+📱 Access the app at http://localhost:30001
+📝 Admin panel at http://localhost:30001/admin-login.html
+
+---

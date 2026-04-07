@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - SY Wealth</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo" style="text-decoration: none; color: inherit; cursor: pointer;">
+                        <img src="images/logo.png" alt="SY Wealth" class="site-logo">
+                    </a>
+                <nav class="nav">
+                    <a href="investments.html" class="nav-link">Investir</a>
+                    <a href="how-it-works.html" class="nav-link">Comment ça marche</a>
+                    <a href="about.html" class="nav-link">À propos</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="signup.html" class="nav-link btn-login">S'inscrire</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- LOGIN FORM -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1>Connexion</h1>
+                <p style="color: var(--text-secondary); margin-bottom: 25px;">Accédez à votre compte SY Wealth</p>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="phone">Numéro de téléphone</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="0707070707 ou +221707070707">
+                        <small style="color: var(--text-light); margin-top: 5px;">Format: 70XXXXXXXX ou +22170XXXXXXXX</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required placeholder="••••••••">
+                    </div>
+
+                    <div id="error-message" class="error-message" style="margin-bottom: 15px;"></div>
+
+                    <button type="submit" class="btn btn-primary full-width" id="login-btn">Se connecter</button>
+                </form>
+
+                <p class="auth-link">Pas de compte? <a href="signup.html" style="color: var(--primary-blue);">S'inscrire maintenant</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SY Wealth. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        const form = document.getElementById('login-form');
+        const errorDiv = document.getElementById('error-message');
+        const loginBtn = document.getElementById('login-btn');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+
+        phoneInput.addEventListener('change', function() {
+            this.value = this.value.replace(/\s/g, '');
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+
+            const phone = phoneInput.value.trim();
+            const password = passwordInput.value;
+
+            // Validation
+            if (!phone) {
+                errorDiv.textContent = '❌ Le numéro de téléphone est obligatoire';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (!password) {
+                errorDiv.textContent = '❌ Le mot de passe est obligatoire';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Disable button and show loading state
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Connexion en cours...';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    if (data.announcements && data.announcements.length > 0) {
+                        localStorage.setItem('announcements', JSON.stringify(data.announcements));
+                    }
+                    window.location.href = data.user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                } else {
+                    // Handle blocked/suspended users
+                    if (data.status === 'blocked') {
+                        errorDiv.innerHTML = '🔒 <strong>Votre compte a été bloqué.</strong><br>Veuillez contacter votre responsable pour le déblocage de votre compte.';
+                    } else if (data.status === 'suspended') {
+                        errorDiv.innerHTML = '⏸️ <strong>Votre compte a été suspendu.</strong><br>Veuillez contacter votre responsable pour plus d\'informations.';
+                    } else {
+                        errorDiv.textContent = '❌ ' + (data.message || 'Identifiants incorrects. Vérifiez votre téléphone et mot de passe.');
+                    }
+                    errorDiv.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Se connecter';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorDiv.textContent = '❌ Erreur réseau. Vérifiez votre connexion et réessayez.';
+                errorDiv.style.display = 'block';
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Se connecter';
+            }
+        });
+    </script>
+</body>
+</html>
