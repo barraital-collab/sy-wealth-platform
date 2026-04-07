@@ -1,0 +1,12 @@
+node_modules/
+.venv/
+.env
+database.sqlite
+sy_wealth.db
+sy_wealth_rollback_backup.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+.env.local
+.env.*.local
